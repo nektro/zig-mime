@@ -2,6 +2,9 @@ const std = @import("std");
 const string = []const u8;
 
 const types = std.ComptimeStringMap(string, .{
+    .{ ".3g2", "video/3gpp2" },
+    .{ ".3gp", "video/3gpp" },
+    .{ ".7z", "application/x-7z-compressed" },
     .{ ".aac", "audio/aac" },
     .{ ".abw", "application/x-abiword" },
     .{ ".arc", "application/x-freearc" },
@@ -19,15 +22,15 @@ const types = std.ComptimeStringMap(string, .{
     .{ ".docx", "application/vnd.openxmlformats-officedocument.wordprocessingml.document" },
     .{ ".eot", "application/vnd.ms-fontobject" },
     .{ ".epub", "application/epub+zip" },
-    .{ ".gz", "application/gzip" },
     .{ ".gif", "image/gif" },
+    .{ ".gz", "application/gzip" },
     .{ ".htm", "text/html" },
     .{ ".html", "text/html" },
     .{ ".ico", "image/vnd.microsoft.icon" },
     .{ ".ics", "text/calendar" },
     .{ ".jar", "application/java-archive" },
-    .{ ".jpg", "image/jpeg" },
     .{ ".jpeg", "image/jpeg" },
+    .{ ".jpg", "image/jpeg" },
     .{ ".js", "application/javascript" },
     .{ ".json", "application/json" },
     .{ ".jsonld", "application/ld+json" },
@@ -45,9 +48,9 @@ const types = std.ComptimeStringMap(string, .{
     .{ ".ogx", "application/ogg" },
     .{ ".opus", "audio/opus" },
     .{ ".otf", "font/otf" },
-    .{ ".png", "image/png" },
     .{ ".pdf", "application/pdf" },
     .{ ".php", "application/x-httpd-php" },
+    .{ ".png", "image/png" },
     .{ ".ppt", "application/vnd.ms-powerpoint" },
     .{ ".pptx", "application/vnd.openxmlformats-officedocument.presentationml.presentation" },
     .{ ".rar", "application/vnd.rar" },
@@ -73,9 +76,6 @@ const types = std.ComptimeStringMap(string, .{
     .{ ".xml", "application/xml" },
     .{ ".xul", "application/vnd.mozilla.xul+xml" },
     .{ ".zip", "application/zip" },
-    .{ ".3gp", "video/3gpp" },
-    .{ ".3g2", "video/3gpp2" },
-    .{ ".7z", "application/x-7z-compressed" },
 });
 
 pub fn typeByExtension(comptime ext: string) ?string {
