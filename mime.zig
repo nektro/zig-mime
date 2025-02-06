@@ -4,7 +4,7 @@ const string = []const u8;
 // Many entries added from https://pagure.io/mailcap/blob/master/f/mime.types
 // Last updated as of 9699055a1b4dfb90f7594ee2e8dda705fa56d3b8
 
-const types = std.ComptimeStringMap(string, .{
+pub const map = std.StaticStringMap(string).initComptime(.{
     .{ ".1", "application/x-troff-man" },
     .{ ".123", "application/vnd.lotus-1-2-3" },
     .{ ".1clr", "application/clr" },
@@ -1408,7 +1408,3 @@ const types = std.ComptimeStringMap(string, .{
     .{ ".zone", "text/dns" },
     .{ ".zst", "application/zstd" },
 });
-
-pub fn typeByExtension(comptime ext: string) ?string {
-    return types.get(ext);
-}
