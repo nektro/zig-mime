@@ -1,10 +1,10 @@
 const std = @import("std");
-const string = []const u8;
+const extras = @import("extras");
 
 // Many entries added from https://github.com/InfrastructureServices/mailcap/blob/master/mime.types
 // Last updated as of 9699055a1b4dfb90f7594ee2e8dda705fa56d3b8
 
-pub const map = std.StaticStringMap(string).initComptime(.{
+pub const map = std.StaticStringMap([:0]const u8).initComptime(.{
     .{ ".1", "application/x-troff-man" },
     .{ ".123", "application/vnd.lotus-1-2-3" },
     .{ ".1clr", "application/clr" },
@@ -1408,3 +1408,26 @@ pub const map = std.StaticStringMap(string).initComptime(.{
     .{ ".zone", "text/dns" },
     .{ ".zst", "application/zstd" },
 });
+
+pub const keys = map.keys();
+
+pub const values = blk: {
+    @setEvalBranchQuota(10_000_000);
+    const all_values = map.values();
+    var values_tmp: []const [:0]const u8 = &.{};
+    var value_hashes: []const u64 = &.{};
+    for (all_values) |item| {
+        const hash = std.hash.Wyhash.hash(0, item);
+        if (std.mem.indexOfScalar(u64, value_hashes, hash) == null) {
+            values_tmp = values_tmp ++ &[_][:0]const u8{item};
+            value_hashes = value_hashes ++ &[_]u64{hash};
+        }
+    }
+    break :blk values_tmp[0..];
+};
+
+pub const Type = blk: {
+    @setEvalBranchQuota(values.len * 2);
+    const Tag = std.math.IntFittingRange(0, values.len - 1);
+    break :blk @Enum(Tag, .exhaustive, values, &std.simd.iota(Tag, values.len));
+};
