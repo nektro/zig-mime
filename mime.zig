@@ -1,7 +1,7 @@
 const std = @import("std");
 const string = []const u8;
 
-// Many entries added from https://pagure.io/mailcap/blob/master/f/mime.types
+// Many entries added from https://github.com/InfrastructureServices/mailcap/blob/master/mime.types
 // Last updated as of 9699055a1b4dfb90f7594ee2e8dda705fa56d3b8
 
 pub const map = std.StaticStringMap(string).initComptime(.{
